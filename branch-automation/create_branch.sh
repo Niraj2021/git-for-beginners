@@ -6,9 +6,9 @@
 # ---------------------------------------
 # Check if Git is installed
 # ---------------------------------------
-git --version || { 
-    echo "Git is not installed. Please install Git first."; 
-    exit 1; 
+git --version || {
+    echo "Git is not installed. Please install Git first.";
+    exit 1;
 }
 
 # ---------------------------------------
@@ -51,17 +51,18 @@ listbranch=$(git branch)
 
 for  b in listbranch ; do
 
+        if [ "$b" == "$branchname" ]; then
+                echo "Branch '$branchname' already exists!!"
+                branch_exists=1
+                break
+        fi
 
-    if [  -f $b ]; then
-    
-            echo "$b already exist!!"
-    else
-    
-            #create the new branch
-    
-            git branch $branchname
-    fi
 done
+
+# Create the branch if it does not exist
+if [ -z "$branch_exists" ]; then
+    git branch "$branchname"
+fi
 
 
 # ---------------------------------------
